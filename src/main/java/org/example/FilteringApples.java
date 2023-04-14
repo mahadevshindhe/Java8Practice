@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
@@ -13,37 +14,49 @@ public class FilteringApples {
                 new Apple(120, "red")
         );
 
-        List<Apple> greenApples = null;
+        List<Apple> greenApples = filterApples(inventory, FilteringApples::isGreenApple);
         System.out.println(greenApples);
 
         // [Apple{color='green', weight=155}]
-        List<Apple> heavyApples = null;
+        List<Apple> heavyApples = filterApples(inventory, FilteringApples::isHeavyApple);
         System.out.println(heavyApples);
 
         // [Apple{color='green', weight=80}, Apple{color='green', weight=155}]
-        List<Apple> greenApples2 = null;
+        List<Apple> greenApples2 = filterApples(inventory, (Apple a) -> "green".equals(a.getColor()));
         System.out.println(greenApples2);
 
         // [Apple{color='green', weight=155}]
-        List<Apple> heavyApples2 = null;
+        List<Apple> heavyApples2 = filterApples(inventory, (Apple a) -> a.getWeight() > 150);
         System.out.println(heavyApples2);
 
         // []
-        List<Apple> weirdApples = null;
+        List<Apple> weirdApples = filterApples(inventory, (Apple a) -> a.getWeight() < 80 || "brown".equals(a.getColor()));
         System.out.println(weirdApples);
 
     }
 
     public static List<Apple> filterGreenApples(List<Apple> inventory) {
-        return null;
+        ArrayList<Apple> result = new ArrayList<>();
+        for (Apple apple : inventory) {
+            if ("green".equals(apple.getColor())) {
+                result.add(apple);
+            }
+        }
+        return result;
     }
 
     public static List<Apple> filterHeavyApples(List<Apple> inventory) {
-        return null;
+        ArrayList<Apple> result = new ArrayList<>();
+        for (Apple apple : inventory) {
+            if (apple.getWeight() > 150) {
+                result.add(apple);
+            }
+        }
+        return result;
     }
 
     public static boolean isGreenApple(Apple apple) {
-        return false;
+        return "green".equals(apple.getColor());
     }
 
     public static boolean isHeavyApple(Apple apple) {
@@ -51,7 +64,13 @@ public class FilteringApples {
     }
 
     public static List<Apple> filterApples(List<Apple> inventory, Predicate<Apple> p) {
-        return null;
+        ArrayList<Apple> result = new ArrayList<>();
+        for (Apple apple : inventory) {
+            if (p.test(apple)) {
+                result.add(apple);
+            }
+        }
+        return result;
     }
 
 
