@@ -19,7 +19,7 @@ public class Sorting {
         ));
 
         // [Apple{color=GREEN, weight=80}, Apple{color=RED, weight=120}, Apple{color=GREEN, weight=155}]
-        inventory.sort(null);
+        inventory.sort(new AppleComparator());
         System.out.println(inventory);
 
         // reshuffling things a little
@@ -27,7 +27,12 @@ public class Sorting {
 
         // 2
         // [Apple{color=GREEN, weight=30}, Apple{color=GREEN, weight=80}, Apple{color=GREEN, weight=155}]
-        inventory.sort(null);
+        inventory.sort(new Comparator<Apple>() {
+            @Override
+            public int compare(Apple o1, Apple o2) {
+                return o1.getWeight() - o2.getWeight();
+            }
+        });
         System.out.println(inventory);
 
         // reshuffling things a little
@@ -35,7 +40,7 @@ public class Sorting {
 
         // 3
         // [Apple{color=RED, weight=20}, Apple{color=GREEN, weight=30}, Apple{color=GREEN, weight=155}]
-        inventory.sort(null);
+        inventory.sort((a1,a2)-> a1.getWeight() - a2.getWeight());
         System.out.println(inventory);
 
         // reshuffling things a little
@@ -43,12 +48,16 @@ public class Sorting {
 
         // 4
         // [Apple{color=RED, weight=10}, Apple{color=RED, weight=20}, Apple{color=GREEN, weight=155}]
-        inventory.sort(null);
+        inventory.sort(comparing(Apple::getWeight));
         System.out.println(inventory);
     }
 
-    static class AppleComparator{
+    static class AppleComparator implements Comparator<Apple>{
 
+        @Override
+        public int compare(Apple a1, Apple a2) {
+            return a1.getWeight() - a2.getWeight();
+        }
     }
 
 }
